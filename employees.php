@@ -1,3 +1,7 @@
+<?php
+session_start();
+$is_logged_in = isset($_SESSION['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -152,18 +156,26 @@
 <body>
 <div class="container" id="top">
 
+    <!-- ШАПКА (HEADER) - С АВТОРИЗАЦИЕЙ -->
     <div class="header">
         <div class="logo">
-    <img src="images/main.jpg" alt="Фаренгейт" width="50" height="50" style="border-radius: 10px; margin-right: 10px;">
-</div>
-        <h1 class="company-name">Фаренгейт</h1>
+            <img src="images/main.jpg" alt="Фаренгейт" width="50" height="50" style="border-radius: 10px; margin-right: 10px;">
+            <span style="margin-left: 10px;">🔥 Фаренгейт</span>
+        </div>
         <div class="login-form">
-            <input type="text" placeholder="логин">
-            <input type="password" placeholder="пароль">
-            <div>
-                <button>войти</button>
-                <a href="login.php">регистрация</a>
-            </div>
+            <?php if ($is_logged_in): ?>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>👤 <?php echo $_SESSION['user_name']; ?></span>
+                    <a href="logout.php" style="color: white; background: #ff69b4; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Выйти</a>
+                </div>
+            <?php else: ?>
+                <input type="text" placeholder="логин" id="quick-login">
+                <input type="password" placeholder="пароль" id="quick-password">
+                <div>
+                    <button onclick="quickLogin()">войти</button>
+                    <a href="login.php">регистрация</a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -173,7 +185,6 @@
         <a href="contacts.php">Контакты</a>
         <a href="guestbook.php">Гостевая</a>
         <a href="search.php">Поиск</a>
-        
     </div>
     <hr>
 
@@ -324,7 +335,7 @@
             </div>
             
             <div style="text-align:center; margin:40px 0;">
-                <a href="vacancies.html" style="background:#ff69b4; color:white; padding:15px 30px; text-decoration:none; border-radius:30px; font-weight:bold;">Хотите к нам в команду? → Вакансии</a>
+                <a href="vacancies.php" style="background:#ff69b4; color:white; padding:15px 30px; text-decoration:none; border-radius:30px; font-weight:bold;">Хотите к нам в команду? → Вакансии</a>
             </div>
         </div>
 
@@ -349,11 +360,23 @@
 
     <div class="footer">
         <p>&copy; 2024 Фаренгейт. Все права защищены.</p>
+        <p style="margin-top: 10px;">
+            <a href="javascript:void(0)" 
+               onclick="window.open('privacy.pdf', 'Политика конфиденциальности', 'width=700,height=500,resizable=yes,scrollbars=yes')" 
+               style="color: #ffb6c1; text-decoration: none;">
+               📄 Политика конфиденциальности
+            </a>
+            &nbsp;|&nbsp;
+            <a href="privacy.pdf" download 
+               style="color: #ffb6c1; text-decoration: none;">
+               ⬇ Скачать
+            </a>
+        </p>
     </div>
 
 </div>
 
-<!-- Плавная прокрутка для всех якорей -->
+<!-- Плавная прокрутка для всех якорей + быстрый вход -->
 <script>
     // Плавная прокрутка при клике на якорные ссылки
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -369,6 +392,17 @@
             }
         });
     });
+    
+    // Быстрый вход из шапки
+    function quickLogin() {
+        const email = document.getElementById('quick-login').value;
+        const password = document.getElementById('quick-password').value;
+        if (email && password) {
+            window.location.href = 'login.php?email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
+        } else {
+            alert('Введите email и пароль');
+        }
+    }
 </script>
 </body>
 </html>

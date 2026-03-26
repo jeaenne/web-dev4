@@ -46,15 +46,16 @@ $result = $conn->query($sql);
         <?php
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                echo '<div style="border:2px solid #ffb6c1; border-radius:15px; padding:20px; margin:20px 0; display:flex; gap:20px;">';
-                echo '<img src="images/' . $row['image'] . '" alt="' . $row['name'] . '" style="width:150px; height:150px; object-fit:cover; border-radius:10px;">';
-                echo '<div style="flex:1;">';
-                echo '<div style="font-size:20px; font-weight:bold; color:#ff69b4;">' . htmlspecialchars($row['name']) . '</div>';
-                echo '<div style="font-size:18px; font-weight:bold; margin:10px 0;">💰 ' . number_format($row['price'], 0, '', ' ') . ' руб.</div>';
-                echo '<p>' . htmlspecialchars($row['short_description']) . '</p>';
-                echo '<a href="product.php?id=' . $row['id'] . '" style="display:inline-block; background:#ff69b4; color:white; padding:8px 20px; text-decoration:none; border-radius:5px;">Подробнее →</a>';
-                echo '</div>';
-                echo '</div>';
+                echo '<div class="product-card" data-product-id="' . $row['id'] . '">';
+echo '<img src="images/' . $row['image'] . '" alt="' . $row['name'] . '" class="product-img">';
+echo '<div class="product-info">';
+echo '<div class="product-name">' . htmlspecialchars($row['name']) . '</div>';
+echo '<div class="product-price">💰 ' . number_format($row['price'], 0, '', ' ') . ' руб.</div>';
+echo '<p>' . htmlspecialchars($row['short_description']) . '</p>';
+echo '<button class="add-to-cart" data-id="' . $row['id'] . '" data-name="' . htmlspecialchars($row['name']) . '" data-price="' . $row['price'] . '" data-image="' . $row['image'] . '">🛒 В корзину</button>';
+echo '<a href="product.php?id=' . $row['id'] . '" class="btn">Подробнее →</a>';
+echo '</div>';
+echo '</div>';
             }
         } else {
             echo "<p>Товары не найдены</p>";

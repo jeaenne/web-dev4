@@ -57,3 +57,31 @@ function quickLogin() {
     }
 }
 </script>
+
+<!-- ========== КОРЗИНА ========== -->
+<!-- КНОПКА КОРЗИНЫ -->
+<div class="cart-button" id="cartButton">
+    <span style="font-size: 30px;">🛒</span>
+    <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- ВСПЛЫВАЮЩЕЕ ОКНО КОРЗИНЫ -->
+<div class="cart-popup" id="cartPopup">
+    <div class="cart-popup-content">
+        <div class="cart-popup-header">
+            <h2>🛒 Моя корзина</h2>
+            <span class="cart-close" id="cartClose">&times;</span>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">Корзина пуста</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Итого:</span>
+                <span id="cartTotal">0 ₽</span>
+            </div>
+            <button class="cart-checkout" id="cartCheckout">Оформить заказ</button>
+        </div>
+    </div>
+</div>
+<!-- ========== КОНЕЦ КОРЗИНЫ ========== -->
